@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/statics/main.css" type="text/css" media="screen">
+    </head>
+    <body>
+        <div id="reader" style="margin: 20px auto;" >
+            <div id="left-pane" class="left-pane">
+                <div id="filter" class="filter">
+                    <ul class="segmented-control">
+                        <li id="all-list" class="{% if done == 0 %}current{% end %}"><a href="/?done=0">进行中</a></li>
+                        <li id="user-list" class="{% if done == 1 %}current{% end %}"><a href="/?done=1">已完成</a></li>
+                    </ul>
+                </div>
+                <nav id="nav-container">
+                <ul data-type="all" class="zm-scroll" id="nav" style="display:block;">
+                {% for x in li %}
+                    <li>
+                    <a name="show-answer" href="/?id={{x['id']}}" id="{{x['id']}}" class="show-answer {% if cur.id == x['id'] %}current{% end %}"><h2>{{ x['title'] }}</h2></a>
+                    </li>
+                {% end %}
+                </ul>
+                </nav>
+            </div>
+            <article class="right-pane hentry">
+                <section class="question" id="question">
+                <h1 class="entry-title">{{cur.title or ''}}</h1>
+                <div class="question-description">{% raw cur.content %}</div>
+                </section>
+            </article>
+        </div>
+    </body>
+</html>
