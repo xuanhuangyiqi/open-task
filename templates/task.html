@@ -15,7 +15,7 @@
                 <ul data-type="all" class="zm-scroll" id="nav" style="display:block;">
                 {% for x in li %}
                     <li>
-                    <a name="show-answer" href="/?id={{x['id']}}" id="{{x['id']}}" class="show-answer {% if cur.id == x['id'] %}current{% end %}"><h2>{{ x['title'] }}</h2></a>
+                    <a name="show-answer" href="/?id={{x['id']}}" id="{{x['id']}}" class="show-answer {% if cur.id == x['id'] %}current{% end %}"><h2>{{ x['title'] }}</h2><span>{{x['time']}}</span></a>
                     </li>
                 {% end %}
                 </ul>

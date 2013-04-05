@@ -1,3 +1,6 @@
+#coding: utf-8
+
+import time
 import markdown
 import tornado.database
 from configs import DATABASE
@@ -7,6 +10,15 @@ def mdfilter(dic):
     if 'content' in dic:
         dic['content'] = markdown.markdown(dic['content'])
     return dic
+
+def tfilter(ti):
+    last = time.time()-ti
+    if last < 60: return u"%d秒前"%last
+    if last < 3600: return u"%分前"%last/60
+    if last < 86400: return u"%小时前"%last/3600
+    if last < 86400*30: return u"%天前"%last/86400
+    return time.strftime("%m-%d", time.localtime(ti))
+
 
 class Model:
     def __init__(self):
@@ -19,7 +31,11 @@ class Model:
 
     def get_tasks(self, num=50, done=0):
         sql = 'SELECT * FROM task WHERE done=%d ORDER BY ord DESC LIMIT %s'%(done, num)
-        return self.db.query(sql)
+        p = self.db.query(sql)
+        for x in range(len(p)):
+            p[x]['time'] = tfilter(p[x]['create_time'])  
+        return p
+
     
     def find_task(self, title):
         sql = "SELECT * FROM task WHERE title = '%s'"%title
