@@ -14,7 +14,8 @@ class Model:
 
     def get_task(self, tid):
         sql = 'SELECT * FROM task WHERE id=%d'%tid
-        return mdfilter(self.db.query(sql))[0] or None
+        p = mdfilter(self.db.query(sql))
+        return p[0] if p else None
 
     def get_tasks(self, num=50, done=0):
         sql = 'SELECT * FROM task WHERE done=%d ORDER BY ord DESC LIMIT %s'%(done, num)
