@@ -14,9 +14,9 @@ def mdfilter(dic):
 def tfilter(ti):
     last = time.time()-ti
     if last < 60: return u"%d秒前"%last
-    if last < 3600: return u"%分前"%last/60
-    if last < 86400: return u"%小时前"%last/3600
-    if last < 86400*30: return u"%天前"%last/86400
+    if last < 3600: return u"%d分前"%(last/60)
+    if last < 86400: return u"%d小时前"%(last/3600)
+    if last < 86400*30: return u"%d天前"%(last/86400)
     return time.strftime("%m-%d", time.localtime(ti))
 
 
