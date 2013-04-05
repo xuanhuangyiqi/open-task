@@ -9,5 +9,5 @@ DATABASE = {
     'database': 'task',
     'host':     'localhost',
     'user':     'root',
-    'password': '901014',
+    'password': 'pass',
 }

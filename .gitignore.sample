@@ -1,4 +1,5 @@
 .gitignore
 *.pyc
 .DS_Store
+configs.py
 
