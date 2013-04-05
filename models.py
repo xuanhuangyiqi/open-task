@@ -15,7 +15,7 @@ class Model:
     def get_task(self, tid):
         sql = 'SELECT * FROM task WHERE id=%d'%tid
         p = mdfilter(self.db.query(sql))
-        return p[0] if p else None
+        return p[0] if p else {}
 
     def get_tasks(self, num=50, done=0):
         sql = 'SELECT * FROM task WHERE done=%d ORDER BY ord DESC LIMIT %s'%(done, num)
@@ -30,14 +30,14 @@ class Model:
         self.db.execute(sql)
 
     def max_task_ord(self):
-        sql = "SELECT ord FROM task"
-        p = [int(x['ord']) for x in self.db.query(sql)]
-        return 0 if not p else max(p)
+        sql = "SELECT * FROM task ORDER BY ord DESC LIMIT 1"
+        p = self.db.query(sql)
+        return p[0] if p else {}
 
     def min_task_ord(self):
-        sql = "SELECT ord FROM task"
-        p = [int(x['ord']) for x in self.db.query(sql)]
-        return 0 if not p else min(p)
+        sql = "SELECT * FROM task ORDER BY ord LIMIT 1"
+        p = self.db.query(sql)[0]
+        return p[0] if p else {}
 
     def update_task(self, **args):
         tid = args.pop('tid')

@@ -23,8 +23,8 @@
             </div>
             <article class="right-pane hentry">
                 <section class="question" id="question">
-                <h1 class="entry-title">{{cur.title or ''}}</h1>
-                <div class="question-description">{% raw cur.content %}</div>
+                <h1 class="entry-title">{{cur.get('title', '') or ''}}</h1>
+                <div class="question-description">{% raw cur.get('content','') %}</div>
                 </section>
             </article>
         </div>

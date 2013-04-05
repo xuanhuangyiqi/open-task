@@ -13,9 +13,9 @@ class BaseHandler(tornado.web.RequestHandler):
 class MainHandler(BaseHandler):
     def get(self):
         if self.get_argument('shell', None): return self.write(self.db.task_shell())
-        tid = int(self.get_argument('id', self.db.max_task_ord()))
+        tid = int(self.get_argument('id', self.db.max_task_ord().get('id', 0)))
         current_task = self.db.get_task(tid)
-        done = int(self.get_argument('done', current_task.done))
+        done = int(self.get_argument('done', current_task.get('done',0)))
         li = self.db.get_tasks(50, done)
         self.render('task.html', li=li, cur=current_task, done=done)
 
@@ -37,7 +37,7 @@ class MainHandler(BaseHandler):
 
             order = self.get_argument('order', None)
             if order:
-                self.db.update_task(tid=tid, ord=self.db.min_task_ord()-1)
+                self.db.update_task(tid=tid, ord=self.db.min_task_ord().ord-1)
                 return self.render('success.html')
             
         if self.db.find_task(title): #dump task
@@ -45,7 +45,7 @@ class MainHandler(BaseHandler):
         else:# create task
             self.db.create_task(
                     int(time.time()),
-                    self.db.max_task_ord() + 1,
+                    self.db.max_task_ord().ord + 1,
                     title,
                     '',
                     0,
