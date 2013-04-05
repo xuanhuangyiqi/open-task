@@ -2,11 +2,11 @@ import markdown
 import tornado.database
 from configs import DATABASE
 
-def mdfilter(li):
-    for x in li:
-        x.content = markdown.markdown(x.content)
-    return li
 
+def mdfilter(dic):
+    if 'content' in dic:
+        dic['content'] = markdown.markdown(dic['content'])
+    return dic
 
 class Model:
     def __init__(self):
@@ -14,12 +14,12 @@ class Model:
 
     def get_task(self, tid):
         sql = 'SELECT * FROM task WHERE id=%d'%tid
-        p = mdfilter(self.db.query(sql))
-        return p[0] if p else {}
+        p = self.db.query(sql)
+        return mdfilter(p[0]) if p else {}
 
     def get_tasks(self, num=50, done=0):
         sql = 'SELECT * FROM task WHERE done=%d ORDER BY ord DESC LIMIT %s'%(done, num)
-        return mdfilter(self.db.query(sql))
+        return self.db.query(sql)
     
     def find_task(self, title):
         sql = "SELECT * FROM task WHERE title = '%s'"%title
