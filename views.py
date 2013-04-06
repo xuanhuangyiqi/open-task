@@ -33,7 +33,7 @@ class MainHandler(BaseHandler):
             
             content = self.get_argument('content', None)
             if content:
-                self.db.update_task(tid=tid, content="'%s'"%MySQLdb.escape_string(content))
+                self.db.update_task(tid=tid, content="'%s'"%MySQLdb.escape_string(content.encode('utf-8')))
                 return self.render('success.html')
 
             order = self.get_argument('order', None)
