@@ -1,6 +1,7 @@
 import time
 import markdown
 import tornado.web
+import MySQLdb
 from models import Model
 
 
@@ -32,7 +33,7 @@ class MainHandler(BaseHandler):
             
             content = self.get_argument('content', None)
             if content:
-                self.db.update_task(tid=tid, content="'%s'"%content)
+                self.db.update_task(tid=tid, content="'%s'"%MySQLdb.escape_string(content))
                 return self.render('success.html')
 
             order = self.get_argument('order', None)
@@ -46,7 +47,7 @@ class MainHandler(BaseHandler):
             self.db.create_task(
                     int(time.time()),
                     self.db.max_task_ord().ord + 1,
-                    title,
+                    MySQLdb.escape_string(title),
                     '',
                     0,
                     )
