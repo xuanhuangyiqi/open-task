@@ -58,6 +58,7 @@ class Model:
     def update_task(self, **args):
         tid = args.pop('tid')
         sql = "UPDATE task SET %s WHERE id=%d"%(', '.join(["%s=%s"%(x, args[x]) for x in args]),int(tid))
+        sql = sql.replace('%','%%')
         self.db.execute(sql)
 
     def task_shell(self):
