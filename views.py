@@ -47,7 +47,7 @@ class MainHandler(BaseHandler):
             self.db.create_task(
                     int(time.time()),
                     self.db.max_task_ord().ord + 1,
-                    MySQLdb.escape_string(title),
+                    MySQLdb.escape_string(title.encode('utf-8')),
                     '',
                     0,
                     )
