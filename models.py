@@ -2,7 +2,7 @@
 
 import time
 import markdown
-import tornado.database
+import torndb
 from configs import DATABASE
 
 
@@ -22,7 +22,7 @@ def tfilter(ti):
 
 class Model:
     def __init__(self):
-        self.db = tornado.database.Connection(**DATABASE)
+        self.db = torndb.Connection(DATABASE['host'], DATABASE['database'], DATABASE['user'], DATABASE['password'])
 
     def get_task(self, tid):
         sql = 'SELECT * FROM task WHERE id=%d'%tid
@@ -52,7 +52,7 @@ class Model:
 
     def min_task_ord(self):
         sql = "SELECT * FROM task ORDER BY ord LIMIT 1"
-        p = self.db.query(sql)[0]
+        p = self.db.query(sql)
         return p[0] if p else {}
 
     def update_task(self, **args):

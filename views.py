@@ -38,7 +38,7 @@ class MainHandler(BaseHandler):
 
             order = self.get_argument('order', None)
             if order:
-                self.db.update_task(tid=tid, ord=self.db.min_task_ord().ord-1)
+                self.db.update_task(tid=tid, ord=self.db.min_task_ord().get('ord', 0)-1)
                 return self.render('success.html')
             
         if self.db.find_task(title): #dump task
@@ -46,7 +46,7 @@ class MainHandler(BaseHandler):
         else:# create task
             self.db.create_task(
                     int(time.time()),
-                    self.db.max_task_ord().ord + 1,
+                    self.db.max_task_ord().get('ord', 0) + 1,
                     MySQLdb.escape_string(title.encode('utf-8')),
                     '',
                     0,

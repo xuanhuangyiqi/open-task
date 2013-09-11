@@ -10,7 +10,8 @@ Update information by HTTP-POST, which can collaborate with **Alfred**, **VIM**,
 
 # Requirement
 ###Python
-    * Tornado 2.2
+    * Tornado 3.1.1
+    * torndb 0.1
     * Markdown
     * python-mysql
 # Procedure

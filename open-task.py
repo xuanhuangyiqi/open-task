@@ -5,7 +5,8 @@ import urllib
 import urllib2  
 import cookielib  
 
-SITE = 'http://example.com:8888'
+#SITE = 'http://example.com:8888'
+SITE = 'http://localhost:8881'
 if __name__ == "__main__":
     if len(sys.argv) >= 3:
         try:
@@ -22,8 +23,7 @@ if __name__ == "__main__":
                 req = urllib2.Request(SITE ,urllib.urlencode({"tid":int(sys.argv[2]), "order":0}))  
 
             resp = urllib2.urlopen(req)  
-            os.system("growl -nostiky %s"%resp.read())
         except Exception, e:
-            os.system("growl -nostiky NetworkError")
+            print e
     else:
-        os.system("growl -nostiky no argument")
+        print 'Error'
